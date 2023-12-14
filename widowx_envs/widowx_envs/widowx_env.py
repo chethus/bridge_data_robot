@@ -98,6 +98,8 @@ class WidowXEnv(RobotBaseEnv):
                     successful = True
                 except Environment_Exception:
                     self.move_to_neutral()
+        elif self._hp.randomize_initpos == 'neutral':
+            self.move_to_neutral()
         else:
             if self._hp.randomize_initpos == 'restricted_space':
                 startpos = np.random.uniform(self._low_bound[:3] + np.array([0, 0, 0.085]),

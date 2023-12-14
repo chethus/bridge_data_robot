@@ -78,8 +78,8 @@ class RobotBaseEnv(BaseEnv):
 
         if len(self._cameras) == 1:
             self._cam_names = ['front']
-        elif len(self._cameras) == 2:
-            self._cam_names = ['front', 'left']
+#        elif len(self._cameras) == 2:
+#            self._cam_names = ['front', 'left']
         else:
             self._cam_names = ['cam{}'.format(i) for i in range(len(self._cameras))]
 

@@ -2,7 +2,7 @@ import argparse
 import importlib.util  # replaced: import imp due to deprecation
 
 import json
-from widowx_envs.utils.utils import ask_confirm, save_config
+from widowx_envs.utils.utils import ask_confirm, save_config, input_fn
 import datetime
 import os
 from widowx_envs.trajectory_collector import TrajectoryCollector
@@ -60,7 +60,15 @@ class DataCollectionManager(object):
             _, obs_dict, _ = s.agent.sample(s.policies[0], 0)
             floor_height = np.min(obs_dict['full_state'][:, 2])
             meta_data_dict['floor_height'] = floor_height
-            
+        
+        if hyperparams['record_factors']:
+           print("Object: ")
+           meta_data_dict['object'] = input_fn()
+           print("Distractors:")
+           meta_data_dict['distractors'] = input_fn()
+           print("Task description/other: ")
+           meta_data_dict['other'] = input_fn()
+
         print('#################################################')
         print('#################################################')
         for k, v in meta_data_dict.items():

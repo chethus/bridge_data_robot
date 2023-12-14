@@ -9,6 +9,7 @@ from sensor_msgs.msg import CameraInfo
 import copy
 import hashlib
 import logging
+import subprocess
 
 
 class LatestObservation(object):
@@ -75,7 +76,7 @@ class CameraRecorder:
         self._camera_info = rospy.wait_for_message(self._camera_info_name, CameraInfo)
 
         print("Successfully read camera info")
-
+       
 
         rospy.Subscriber(topic_data.name, Image_msg, self.store_latest_im)
         logger = logging.getLogger('robot_logger')
@@ -85,6 +86,10 @@ class CameraRecorder:
             print('Still waiting for an image to arrive at CameraRecorder... Topic name:', self._topic_name)
             self._status_sem.acquire()
         logger.info("Cameras {} subscribed: stream is {}x{}".format(self._topic_data.name, self._cam_width, self._cam_height))
+        
+        if self._topic_name == "/wrist/image_raw":
+            subprocess.run(["v4l2-ctl", "-d", "/dev/video0", "--set-ctrl=contrast=100,brightness=50,saturation=100"])  # wrist may not always be video0
+  
 
     def _cam_start_tracking(self, lt_ob, point):
         lt_ob.reset_tracker()
@@ -192,7 +197,6 @@ class CameraRecorder:
 
         t0 = rospy.get_time()
         self._proc_image(self._latest_image, data)
-
         current_hash = hashlib.sha256(self._latest_image.img_cv2.tostring()).hexdigest()
         if self._is_first_status:
             self._cam_height, self._cam_width = self._latest_image.img_cv2.shape[:2]

@@ -455,15 +455,28 @@ class TimedLoop(BlockingLoop):
                     done = True
                 # print('total exec time', time.time() - tstart)
         self.env.finish()
+        
+        traj_ok = True
+        # remove gripper
+        states = obs['state'][:, :-1]
+        delta_acts = states[1:] - states[:-1]
+        act_np = np.linalg.norm(delta_acts, axis=1)
+        max_act_norm = np.max(act_np)
+        print("max action norm: {}".format(max_act_norm))
+        if max_act_norm > 1:
+            print("recorded action norm too high, rejecting trajectory")
+            traj_ok = False
+	
+        if traj_ok:
+            traj_ok = self.env.valid_rollout()
+            if self._hp.rejection_sample:
+                assert self.env.has_goal(), 'Rejection sampling enabled but env has no goal'
+                traj_ok = self.env.goal_reached()
+                print('goal_reached', traj_ok)
 
-        traj_ok = self.env.valid_rollout()
-        if self._hp.rejection_sample:
-            assert self.env.has_goal(), 'Rejection sampling enabled but env has no goal'
-            traj_ok = self.env.goal_reached()
-            print('goal_reached', traj_ok)
-
-        if self._hp.ask_confirmation:
-            traj_ok = self.env.ask_confirmation()
+            if self._hp.ask_confirmation:
+                traj_ok = self.env.ask_confirmation()
+        
         agent_data['traj_ok'] = traj_ok
 
         if 'images' in obs:
