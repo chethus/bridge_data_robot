@@ -25,7 +25,7 @@ services:
       - ./widowx_envs:/home/robonet/widowx_envs
       - /dev:/dev  # for host tty access
     devices:
-      - /dev/video6:/dev/video6
+      - /dev/video4:/dev/video6
 
   bridge_data_v2:
     image: robonet-bridge-data-v2
@@ -43,7 +43,7 @@ services:
       - ./experiments:/home/robonet/experiments
       - /home/iliad/widowx_data:/home/robonet/trainingdata 
     devices:
-      - /dev/video6:/dev/video6
+      - /dev/video4:/dev/video6
       
   octo:
     image: robonet-octo
@@ -61,4 +61,4 @@ services:
       - ./experiments:/home/robonet/experiments
       - /home/iliad/widowx_data:/home/robonet/trainingdata 
     devices:
-      - /dev/video6:/dev/video6
+      - /dev/video4:/dev/video6
