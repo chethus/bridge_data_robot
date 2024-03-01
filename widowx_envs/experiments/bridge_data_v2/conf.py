@@ -49,6 +49,6 @@ config = {
     'policy': policy,
     'save_format': ['raw'],
     'make_diagnostics': False,
-    'record_floor_height': True,
+    'record_floor_height': False,
     'record_factors': True
 }

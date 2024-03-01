@@ -30,7 +30,8 @@ class WidowXConfigs:
         ],
         "action_clipping": "xyz",
         "catch_environment_except": False,
-        "start_state": [0.3, 0.0, 0.15, 0, 0, 0, 1], # pose when reset is called
+        "start_state": None, # pose when reset is called
+        "randomize_initpos": 'neutral',
         "skip_move_to_neutral": False,
         "return_full_image": False,
         "camera_topics": [{"name": "/blue/image_raw"}],

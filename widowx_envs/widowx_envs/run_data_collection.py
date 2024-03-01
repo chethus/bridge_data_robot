@@ -62,10 +62,6 @@ class DataCollectionManager(object):
             meta_data_dict['floor_height'] = floor_height
         
         if hyperparams['record_factors']:
-           print("Object: ")
-           meta_data_dict['object'] = input_fn()
-           print("Distractors:")
-           meta_data_dict['distractors'] = input_fn()
            print("Task description/other: ")
            meta_data_dict['other'] = input_fn()
 
