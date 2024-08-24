@@ -88,7 +88,7 @@ class CameraRecorder:
         logger.info("Cameras {} subscribed: stream is {}x{}".format(self._topic_data.name, self._cam_width, self._cam_height))
         
         if self._topic_name == "/wrist/image_raw":
-            subprocess.run(["v4l2-ctl", "-d", "/dev/video6", "--set-ctrl=contrast=100,brightness=50,saturation=100"])  # wrist may not always be video0
+            subprocess.run(["v4l2-ctl", "-d", "/dev/video4", "--set-ctrl=contrast=100,brightness=50,saturation=100"])  # wrist may not always be video0
   
 
     def _cam_start_tracking(self, lt_ob, point):

@@ -39,6 +39,7 @@ RUN apt-get update -y && apt-get install -y \
     ros-noetic-ros-base \
     ros-noetic-realsense2-camera \
     ros-noetic-video-stream-opencv \
+    ros-noetic-dynamixel-sdk \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
